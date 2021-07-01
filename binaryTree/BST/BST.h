@@ -5,6 +5,7 @@ typedef struct Node{
 	int key;
 	struct Node* left;
 	struct Node* right;
+	struct Node* p;
 }Node;
 
 typedef struct BST{
@@ -32,3 +33,6 @@ void traversal(Node* node);
 
 // get root 
 Node* getRoot(BST* tree);
+
+//get successor
+Node* getSuccessor(Node * node);

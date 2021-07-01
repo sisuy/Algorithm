@@ -6,6 +6,7 @@ Node* initNode(int i){
 	node -> key = i;
 	node -> left = NULL;
 	node -> right = NULL;
+	node -> p = NULL; 
 	return node;
 }
 
@@ -23,20 +24,23 @@ Node* getRoot(BST* tree){
 //add Node
 void add(BST* tree,int i){
 	Node* tmp = tree -> root;
-	while(1){
-		if(i < tmp-> key){
-			if(tmp -> left == NULL){
-				tmp->left = initNode(i);
-				break;
-			}
-			tmp = tmp-> left;	
+	Node* parent = tree -> root -> p;
+	while(tmp != NULL){
+		if(i < tmp -> key){
+			parent = tmp;
+			tmp = tmp -> left;
 		}else{
-			if(tmp -> right == NULL){
-				tmp->right = initNode(i);
-				break;
-			}
-			tmp = tmp-> right;
+			parent = tmp;
+			tmp = tmp -> right;
 		}
+	}
+
+	if(i < parent -> key){
+		parent -> left = initNode(i);
+		parent -> left -> p = parent;
+	}else{
+		parent -> right = initNode(i);
+		parent -> right -> p = parent;
 	}
 }
 
@@ -67,8 +71,91 @@ void traversal(Node* node){
 	if(node == NULL){
 		return;
 	}
-	printf("%d\n",node -> key);
 	
 	traversal(node -> right);
+	printf("%d\n",node -> key);
 	traversal(node -> left);
 }
+
+//get successor
+Node* getSuccessor(Node* node){
+	if(node -> right != NULL){
+		Node* ret = node -> right;
+		while(ret->left != NULL){
+			ret = ret -> left;
+		}
+		return ret;
+	}
+
+	while(node != node -> p -> left){
+		node = node -> p;
+	}
+	return node -> p;
+}
+
+//transplant
+void transplant(Node* node1,Node* node2){
+	if(node1 == NULL){
+		printf("wrong obj\n");
+		return;
+	}
+	if(node1 == node1 -> p -> left){
+		node1 -> p -> left = node2;
+		if(node2 == node2 -> p -> left){
+			node2 -> p -> left = NULL;
+		}else{
+			node2 -> p -> right = NULL;
+		}
+		node2 -> p = node1 -> p;
+	}else{
+		node1 -> p -> right = node2;
+
+		if(node2 == node2 -> p -> left){
+			node2 -> p -> left = NULL;
+		}else{
+			node2 -> p -> right = NULL;
+		}
+		node2 -> p = node1 -> p;	
+	}	
+}
+
+//delete node
+void del(Node* node){
+	if(node == NULL){
+		printf("wrong node\n");
+		return;
+	}
+
+	if(node -> left == NULL && node -> right == NULL){
+		if(node == node -> left){
+			free(node -> p -> left);
+			node -> p -> left = NULL;
+		}else{
+			free(node -> p -> right);
+			node -> p -> right = NULL;
+		}
+	}else if(node -> left == NULL){
+		if(node == node -> p -> left){
+			node -> p -> left = node -> right;
+			node -> right -> p = node -> p;
+		}else{
+			node -> p -> right = node -> right;
+			node -> right -> p = node -> p;
+		}
+	}else if(node -> right == NULL){
+		if(node == node -> p -> left){
+			node -> p -> left = node -> left;
+			node -> left -> p = node -> p;
+		}else{
+			node -> p -> right = node -> right;
+			node -> right -> p = node -> p;
+		}
+	}else{
+		Node* successor = getSuccessor(node);
+		transplant(node,successor);
+		successor -> right = node -> right;
+		successor -> left = node -> left;
+		}
+	}
+
+
