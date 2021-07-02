@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 typedef int Color;
-#define 1 black
-#define 0 red
+#define black 1
+#define red 0
 
 typedef struct Node{
 	int key;
