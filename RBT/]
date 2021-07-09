@@ -14,6 +14,7 @@ int main(){
 	display(tree,tree -> root);
 	printf("\n");
 	rightRotate(tree,tree -> root -> left);
+	printf("root :%d\n",tree -> root -> key);
 	printf("%d\n",tree -> root -> left -> left -> key);
 	display(tree,tree -> root);
 }

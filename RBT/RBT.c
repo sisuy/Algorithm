@@ -1,29 +1,41 @@
 #include"RBT.h"
 
 //init node
-Node* initNode(int i){
+Node* initNode(RBT* tree,int i){
 	Node* node = malloc(sizeof(Node));
 	node -> key = i;
 	node -> color = red;
-	node -> p = NULL;
-	node -> left = NULL;
-	node -> right = NULL;
+	node -> p = tree -> Nil;
+	node -> left = tree -> Nil;
+	node -> right = tree -> Nil;
 	return node;
 }
 
 //init RBT
 RBT* initRBT(int i){
 	RBT* tree = malloc(sizeof(RBT));
-	tree -> root = initNode(i);
+	tree -> Nil = malloc(sizeof(Node));
+	tree -> Nil -> key = 0;
+	tree -> Nil -> color = black;
+	tree -> Nil -> right = tree -> Nil;
+	tree -> Nil -> left = tree -> Nil;
+	tree -> Nil -> p = tree -> Nil;
+	tree -> root = malloc(sizeof(Node));
+	tree -> root -> p = tree -> Nil;
+	tree -> root -> key = i;
 	tree -> root -> color = black;
-	tree -> Nil = NULL;
+	tree -> root -> left = tree -> Nil; 
+	tree -> root -> right = tree -> Nil; 
 	tree -> root -> p = tree -> Nil;
 	return tree;
 }
 
 //left rotate
-void leftRotate(Node* node){
+void leftRotate(RBT* tree,Node* node){
 	Node* y = node -> right;
+	if(node == tree -> root){
+		tree -> root = y;
+	}
 	node -> right = y -> left;
 	y -> left -> p = node;
 	y -> left = node;
@@ -38,17 +50,20 @@ void leftRotate(Node* node){
 }
 
 //right rotate
-void rightRotate(Node* y){
+void rightRotate(RBT* tree,Node* y){
 	Node* x = y -> left;
+	if(y == tree -> root){
+		tree -> root = x;
+	}
 	y -> left = x -> right;
 	x -> right -> p = y;
 	x -> right = y;
-	x -> p = y -> p;
-	if(y == y -> p -> left){
-		x -> p -> left = x;
+	if(y == y -> p -> right){
+		y -> p -> right = x;
 	}else{
-		x -> p -> right = x;
+		y -> p -> left = x;
 	}
+	x -> p = y -> p;
 	y -> p = x;
 }
 
@@ -66,12 +81,14 @@ void insertNode(RBT* tree,int i){
 		}
 	}
 	if(i < p -> key){
-		p -> left = initNode(i);
+		p -> left = initNode(tree,i);
+		p -> left -> p = p;
 	}else if(p == tree -> Nil){
-		tree -> root = initNode(i);
+		tree -> root = initNode(tree,i);
 		tree -> root -> p = tree -> Nil; 
 	}else{
-		p -> right = initNode(i);
+		p -> right = initNode(tree,i);
+		p -> right -> p = p;
 	}
 }
 
@@ -88,10 +105,26 @@ while(x != tree -> Nil && x -> color != red){
 			y -> p -> color = red;
 			x = y -> p;
 		}else if(y -> color = black){
-			`
+			printf("1");	
 		}
 	}
+
 }
 }
 
-
+//display
+void display(RBT* tree,Node* node){
+	if(node == tree -> Nil){
+		return;
+	}else{
+		char* color = malloc(sizeof(char)* 20);
+		if(node -> color == red){
+			color = "red";
+		}else{
+			color = "black";
+		}
+		display(tree,node -> left);
+		printf("%d %s\n",node -> key, color);
+		display(tree,node -> right);		
+	}
+}
