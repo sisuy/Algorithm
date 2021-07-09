@@ -14,6 +14,7 @@ typedef struct Node{
 
 typedef struct RBT{
 	Node* root;
+	Node* Nil;
 }RBT;
 
 
@@ -22,6 +23,12 @@ Node* initNode(int i);
 
 //init RBT
 RBT* initRBT(int i);
+
+//insert node
+void insertNode(RBT* tree,int i);
+
+//fix tree
+void fixTree(RBT* tree,Node* node);
 
 //left rotate
 void leftRotate(Node* node);
