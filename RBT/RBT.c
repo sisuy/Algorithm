@@ -51,8 +51,7 @@ void leftRotate(RBT* tree,Node* node){
 
 //right rotate
 void rightRotate(RBT* tree,Node* y){
-	Node* x = y -> left
-		;
+	Node* x = y -> left;
 	if(y == tree -> root){
 		tree -> root = x;
 	}
@@ -113,7 +112,7 @@ Node* insertNode(RBT* tree,int i){
 //fix tree
 void fixTree(RBT* tree,Node* z){
 //case 1:
-while(z -> p != tree -> Nil && z -> color == red){
+while(z -> color == red && z -> p != tree -> root){
 	if(z -> p == z -> p -> p -> left){
 		Node* y = z -> p -> p -> right;
 		//case1 : uncle(y) color = red
@@ -125,15 +124,30 @@ while(z -> p != tree -> Nil && z -> color == red){
 			z = z -> p -> p;
 		}else if(z == z -> p ->left){
 			//case2 : uncle is black and x is the left node
-			z = z -> p;
+			z = z -> p ;
 			rightRotate(tree,z);
 		}else{
-			z = z -> p;
+			z = z -> p ;
 			leftRotate(tree,z);
 		}
+}else{
+	Node* y = z -> p -> p -> left;
+	//case1: uncle(y) is red
+	if(y -> color == red){
+		colorNode(tree,z -> p,black);
+		colorNode(tree,y,black);
+		colorNode(tree,y -> p,red);
+		z = z -> p -> p;
+	}else if(z -> p == z -> p -> right){
+		z = z -> p ;
+		leftRotate(tree,z);
+	}else{
+		z = z -> p ;
+		rightRotate(tree,z);
+	}
 }
-	
 }
+	tree -> root -> color = black;
 }
 
 //display
