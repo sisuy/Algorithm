@@ -2,18 +2,10 @@
 
 int main(){
 	RBT* tree = initRBT(10);
+	//inTree(tree,10);
+	//inTree(tree,5);
 	insertNode(tree,10);
 	insertNode(tree,5);
-	insertNode(tree,9);
-	insertNode(tree,11);
-	insertNode(tree,25);
-	insertNode(tree,10);
-	insertNode(tree,4);
-	insertNode(tree,3);
-	insertNode(tree,4);
-	display(tree,tree -> root);
-	printf("\n");
-	rightRotate(tree,tree -> root -> left);
-	printf("%d\n",tree -> root -> left -> left -> key);
+	inTree(tree,4);
 	display(tree,tree -> root);
 }

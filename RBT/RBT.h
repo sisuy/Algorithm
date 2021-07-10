@@ -25,7 +25,10 @@ Node* initNode(RBT* tree,int i);
 RBT* initRBT(int i);
 
 //insert node
-void insertNode(RBT* tree,int i);
+Node* insertNode(RBT* tree,int i);
+
+//color
+void colorNode(RBT* tree,Node* node,Color color);
 
 //fix tree
 void fixTree(RBT* tree,Node* node);
@@ -35,4 +38,11 @@ void leftRotate(RBT* tree,Node* node);
 
 //right rotate
 void rightRotate(RBT* tree,Node* node);
+
+//intree
+void inTree(RBT* tree,int i);
+
+//display
+void display(RBT* tree,Node* node);
+
 

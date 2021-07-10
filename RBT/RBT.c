@@ -51,7 +51,8 @@ void leftRotate(RBT* tree,Node* node){
 
 //right rotate
 void rightRotate(RBT* tree,Node* y){
-	Node* x = y -> left;
+	Node* x = y -> left
+		;
 	if(y == tree -> root){
 		tree -> root = x;
 	}
@@ -67,8 +68,21 @@ void rightRotate(RBT* tree,Node* y){
 	y -> p = x;
 }
 
+//color
+void colorNode(RBT* tree,Node* node,Color color){
+	if(node == tree -> Nil || node ==tree -> root){
+		return;
+	}else{
+		if(color == black){
+			node -> color = black;
+		}else{
+			node -> color = red;
+		}
+	}
+}
+
 //insert node
-void insertNode(RBT* tree,int i){
+Node* insertNode(RBT* tree,int i){
 	Node* tmp = tree -> root;
 	Node* p = tree -> Nil;
 	while(tmp != tree -> Nil){
@@ -82,33 +96,43 @@ void insertNode(RBT* tree,int i){
 	}
 	if(i < p -> key){
 		p -> left = initNode(tree,i);
+		tmp = p -> left;
 		p -> left -> p = p;
 	}else if(p == tree -> Nil){
 		tree -> root = initNode(tree,i);
+		tmp = tree -> root;
 		tree -> root -> p = tree -> Nil; 
 	}else{
 		p -> right = initNode(tree,i);
+		tmp = p -> right;
 		p -> right -> p = p;
 	}
+	return tmp;
 }
 
 //fix tree
-void fixTree(RBT* tree,Node* x){
+void fixTree(RBT* tree,Node* z){
 //case 1:
-while(x != tree -> Nil && x -> color != red){
-	if(x -> p == x -> p -> left){
-		Node* y = x -> p -> right;
+while(z -> p != tree -> Nil && z -> color == red){
+	if(z -> p == z -> p -> p -> left){
+		Node* y = z -> p -> p -> right;
 		//case1 : uncle(y) color = red
 		if(y -> color == red){
-			x -> p -> color = black;
-			y -> color = black;
-			y -> p -> color = red;
-			x = y -> p;
-		}else if(y -> color = black){
-			printf("1");	
+			colorNode(tree,z -> p,black);
+			colorNode(tree,y,black);
+			colorNode(tree,y -> p,red);
+			z = y -> p;
+			z = z -> p -> p;
+		}else if(z == z -> p ->left){
+			//case2 : uncle is black and x is the left node
+			z = z -> p;
+			rightRotate(tree,z);
+		}else{
+			z = z -> p;
+			leftRotate(tree,z);
 		}
-	}
-
+}
+	
 }
 }
 
@@ -127,4 +151,8 @@ void display(RBT* tree,Node* node){
 		printf("%d %s\n",node -> key, color);
 		display(tree,node -> right);		
 	}
+}
+
+void inTree(RBT* tree,int i){
+	fixTree(tree,insertNode(tree,i));
 }
