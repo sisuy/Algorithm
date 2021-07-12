@@ -30,6 +30,22 @@ RBT* initRBT(int i){
 	return tree;
 }
 
+//get min
+Node* getMin(RBT* tree,Node* node){
+	while(node -> left != tree -> Nil){
+		node = node -> left;
+	}
+	return node;
+}
+
+//get madx
+Node* getMax(RBT* tree,Node* node){
+	while(node -> right != tree -> Nil){
+		node = node -> right;
+	}
+	return node;
+}
+
 //left rotate
 void leftRotate(RBT* tree,Node* node){
 	Node* y = node -> right;
@@ -168,3 +184,56 @@ void display(RBT* tree,Node* node){
 void inTree(RBT* tree,int i){
 	fixTree(tree,insertNode(tree,i));
 }
+
+void BSTdelete(RBT* tree,Node* node){
+	///case0: node is root
+	if(node == tree -> root){
+		tree -> root = tree -> Nil;
+		return;
+	}
+
+	//case1: no child
+	if(node -> left == tree -> Nil && 
+	   node -> right == tree -> Nil){
+		if(node == node -> p -> right){
+			node -> p -> right = tree -> Nil;
+		}else{
+			node -> p -> left = tree -> Nil;
+		}
+	//case2: 1 child
+	}else if(node -> left != tree -> Nil &&
+		node -> right == tree -> Nil){
+		if(node == node -> p -> right){
+			node -> p -> right= node -> left;
+		}else{
+			node -> p -> left = node -> left;
+		}
+			node -> left -> p = node -> p;
+	}else if(node -> right != tree -> Nil &&
+		node -> left == tree -> Nil){
+		if(node == node -> p -> left){
+			node -> p -> left = node -> right;
+		}else{
+			node -> p -> right = node -> right;
+		}
+		node -> right -> p = node -> p;
+		//case3: 2 children
+	}else{
+		Node* successor = getMin(tree,node -> p);
+		if(successor == successor -> p -> left){
+			successor -> p -> left = tree -> Nil;
+		}else{
+			successor -> p -> right = tree -> Nil;
+		}
+
+		if(node == node -> p -> left){
+			node -> p -> left = successor;
+		}else{
+			node -> p -> right = successor;
+		}		
+		successor -> p = node -> p;
+		successor -> right = node -> right;
+		successor -> left = node -> left;
+	}
+}
+

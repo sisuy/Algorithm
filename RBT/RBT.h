@@ -30,6 +30,12 @@ Node* insertNode(RBT* tree,int i);
 //color
 void colorNode(RBT* tree,Node* node,Color color);
 
+//get min
+Node* getMin(RBT* tree,Node* node);
+
+//get madx
+Node* getMax(RBT* tree,Node* node);
+
 //fix tree
 void fixTree(RBT* tree,Node* node);
 
@@ -45,4 +51,5 @@ void inTree(RBT* tree,int i);
 //display
 void display(RBT* tree,Node* node);
 
-
+//delete Node by BST
+void BSTdelete(RBT* tree,Node* node);
