@@ -30,6 +30,15 @@ RBT* initRBT(int i){
 	return tree;
 }
 
+//is red
+int isRed(Node* node){
+	if(node -> color == red){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
 //get min
 Node* getMin(RBT* tree,Node* node){
 	while(node -> left != tree -> Nil){
@@ -241,27 +250,29 @@ void transplant(RBT* tree,Node* x,Node* y){
 	if(x == tree -> root){
 		tree -> root = y; 
 	}else{
-		if(x == x -> p  -> left){
+		if(x == x -> p -> left){
 			x -> p -> left = y;
 		}else{
 			x -> p -> right = y;
 		}
 	}
 	y -> p = x -> p;
+	printf("transplant p:%d right:%d\n",y -> p -> left -> key,y -> key);
 }
 
 void RBTdelete(RBT* tree,Node* z){
 	Node* y = z;
+	Node* x; 
 	Color origin_color = y -> color;
 	if(z -> left == tree -> Nil){
-		Node* x = z -> right;
+		x = z -> right;
 		transplant(tree,z,x);
 	}else if(z -> right == tree -> Nil){
-		Node* x = z -> right;
+		x = z -> left;
 		transplant(tree,z,x);
 	}else{
 		y = getMin(tree,z -> right);
-		Node* x = y -> right;
+		x = y -> right;
 		origin_color = y -> color;
 		if(y -> p == z){
 			x -> p = y;	
@@ -274,10 +285,11 @@ void RBTdelete(RBT* tree,Node* z){
 		y -> left = z -> left;
 		y -> left -> p = y;
 		y -> color = z -> color;
-		if(origin_color	== black){
-			delete_fix(tree,x);
-		}
-}
+	}
+	if(origin_color	== black){
+		delete_fix(tree,x);
+	}
+
 }
 
 void delete_fix(RBT* tree,Node* x){
@@ -289,18 +301,21 @@ void delete_fix(RBT* tree,Node* x){
 			w -> p -> color = red;
 			w -> color = black;
 			leftRotate(tree,w -> p);
+			printf("finished left case1\n");
 		}else{
 			//case2: w is black,and  2 child is black
 			if(w -> right -> color == black &&
 			   w -> left -> color == black){
 				w -> color = red;
 				x = x -> p;
+				printf("finished left case2\n");
 			}else if(w -> left -> color == red){
 				//case3: w -> left is red ,w -> right = black, w is black
 				w -> left -> color = black;
 				w -> right -> color = black;
 				w -> color = red;
 				rightRotate(tree,w);
+				printf("finished left case3\n");
 			}else{
 				//case4: w -> right is red,w is black
 				w -> right -> color = black;
@@ -308,14 +323,16 @@ void delete_fix(RBT* tree,Node* x){
 				w -> p -> color = black;
 				leftRotate(tree,x -> p);
 				x = tree -> root;
+				printf("finished left case4\n");
 			}
 		}
 				}else{
 				Node* w = x -> p -> left;
-				if(w -> color = red){
+				if(w -> color == red){
 					//case1
 					w -> color = red;
 					rightRotate(tree,w -> p);
+						printf("finished right case1\n");
 				}else{
 					//w is black
 					if(w -> right -> color == black &&
@@ -323,17 +340,20 @@ void delete_fix(RBT* tree,Node* x){
 						//case2 : w has 2 black child
 						w -> color = red;
 						x = x -> p;
+						printf("finished right case2\n");
 					}else if(w -> right -> color == red){
 						w -> right -> color = black;
 						w -> color = red;
 						w -> left -> color = black;
 						leftRotate(tree,w -> p);
+						printf("finished right case3\n");
 					}else{
 						w -> left -> color = black;
 						w -> color = w -> p -> color;
 						w -> p -> color = black;
 						rightRotate(tree,w -> p);
 						x = tree -> root;
+						printf("finished right case4\n");
 					}	
 				}
 				}

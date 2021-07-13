@@ -24,6 +24,9 @@ Node* initNode(RBT* tree,int i);
 //init RBT
 RBT* initRBT(int i);
 
+//is red
+int isRed(Node* node);
+
 //insert node
 Node* insertNode(RBT* tree,int i);
 
