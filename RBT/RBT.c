@@ -38,7 +38,7 @@ Node* getMin(RBT* tree,Node* node){
 	return node;
 }
 
-//get madx
+//get max
 Node* getMax(RBT* tree,Node* node){
 	while(node -> right != tree -> Nil){
 		node = node -> right;
@@ -237,3 +237,106 @@ void BSTdelete(RBT* tree,Node* node){
 	}
 }
 
+void transplant(RBT* tree,Node* x,Node* y){
+	if(x == tree -> root){
+		tree -> root = y; 
+	}else{
+		if(x == x -> p  -> left){
+			x -> p -> left = y;
+		}else{
+			x -> p -> right = y;
+		}
+	}
+	y -> p = x -> p;
+}
+
+void RBTdelete(RBT* tree,Node* z){
+	Node* y = z;
+	Color origin_color = y -> color;
+	if(z -> left == tree -> Nil){
+		Node* x = z -> right;
+		transplant(tree,z,x);
+	}else if(z -> right == tree -> Nil){
+		Node* x = z -> right;
+		transplant(tree,z,x);
+	}else{
+		y = getMin(tree,z -> right);
+		Node* x = y -> right;
+		origin_color = y -> color;
+		if(y -> p == z){
+			x -> p = y;	
+		}else{
+			transplant(tree,y,x);
+			y -> right = z -> right;
+			y -> right -> p = y;
+		}
+		transplant(tree,z,y);
+		y -> left = z -> left;
+		y -> left -> p = y;
+		y -> color = z -> color;
+		if(origin_color	== black){
+			delete_fix(tree,x);
+		}
+}
+}
+
+void delete_fix(RBT* tree,Node* x){
+	while(x -> color == black && x != tree -> root){
+		if(x == x -> p -> left){
+		Node* w = x -> p -> right;
+		//case1: w is red
+		if(w -> color == red){
+			w -> p -> color = red;
+			w -> color = black;
+			leftRotate(tree,w -> p);
+		}else{
+			//case2: w is black,and  2 child is black
+			if(w -> right -> color == black &&
+			   w -> left -> color == black){
+				w -> color = red;
+				x = x -> p;
+			}else if(w -> left -> color == red){
+				//case3: w -> left is red ,w -> right = black, w is black
+				w -> left -> color = black;
+				w -> right -> color = black;
+				w -> color = red;
+				rightRotate(tree,w);
+			}else{
+				//case4: w -> right is red,w is black
+				w -> right -> color = black;
+				w -> color = w -> p -> color;
+				w -> p -> color = black;
+				leftRotate(tree,x -> p);
+				x = tree -> root;
+			}
+		}
+				}else{
+				Node* w = x -> p -> left;
+				if(w -> color = red){
+					//case1
+					w -> color = red;
+					rightRotate(tree,w -> p);
+				}else{
+					//w is black
+					if(w -> right -> color == black &&
+					   w -> left -> color == black){
+						//case2 : w has 2 black child
+						w -> color = red;
+						x = x -> p;
+					}else if(w -> right -> color == red){
+						w -> right -> color = black;
+						w -> color = red;
+						w -> left -> color = black;
+						leftRotate(tree,w -> p);
+					}else{
+						w -> left -> color = black;
+						w -> color = w -> p -> color;
+						w -> p -> color = black;
+						rightRotate(tree,w -> p);
+						x = tree -> root;
+					}	
+				}
+				}
+		x -> color = black;
+	}
+}

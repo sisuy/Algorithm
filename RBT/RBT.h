@@ -36,6 +36,9 @@ Node* getMin(RBT* tree,Node* node);
 //get madx
 Node* getMax(RBT* tree,Node* node);
 
+//transplant
+void transplant(RBT* tree,Node* x,Node* y);
+
 //fix tree
 void fixTree(RBT* tree,Node* node);
 
@@ -53,3 +56,6 @@ void display(RBT* tree,Node* node);
 
 //delete Node by BST
 void BSTdelete(RBT* tree,Node* node);
+
+//RBT delete fix
+void delete_fix(RBT* tree,Node* x);
