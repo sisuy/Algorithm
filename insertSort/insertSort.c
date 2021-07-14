@@ -52,3 +52,27 @@ int lookup(int* array,int i){
 		return -1; 
 	}
 }
+
+int* binaryAdd(int* A,int* B){
+	int size = sizeof(A);
+	int* C = malloc(sizeof(int) * (size +1));
+	
+	int p = size - 1;
+	int carry = 0;
+	int output = 0;
+	//start: p < size,inital p is 0
+	while(p >= 0){
+		output = (carry + A[p] + B[p])%2;
+		carry = (A[p] + B[p])/2;
+		C[p] = output; 
+		p --;
+	}
+	C[p] = output;
+	return C;
+}
+
+void binaryDisplay(int* array){
+	for(int i = 0; i < sizeof(array); i++){
+		printf("%d",array[i]);
+	}
+}

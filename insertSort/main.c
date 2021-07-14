@@ -10,5 +10,10 @@ int main(){
 	printf("---\n");
 	display(array,size(array));
 	printf("---\n");
-	printf("19:%d",lookup(array,19));
+	printf("19:%d\n",lookup(array,19));
+	printf("---\n");
+
+	int A[] = {0,0,0,0,0,1};
+	int B[] = {1,1,1,1,0,1};
+	binaryDisplay(binaryAdd(A,B));
 }
