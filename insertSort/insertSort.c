@@ -32,8 +32,23 @@ void display(int* array,int size){
 	}
 }
 
-
-
 int size(int* array){
 	return sizeof(array)+1;
+}
+
+int lookup(int* array,int i){
+	int size = sizeof(array);
+	int p = 0;
+	//start: p = 0,when p < size,the while loop is valuabale
+	while(p < size && array[p] != i){
+	//end: when array[p] == i, then quit the loop
+	//maintain: p ++,if p < size,the loop will be availuable	
+		p ++;
+	}
+
+	if(array[p] == i){
+		return p;
+	}else{
+		return -1; 
+	}
 }

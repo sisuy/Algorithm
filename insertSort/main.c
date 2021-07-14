@@ -6,4 +6,9 @@ int main(){
 	DO_insertSort(array,size(array));
 	printf("---\n");
 	display(array,size(array));
+	IO_insertSort(array,size(array));
+	printf("---\n");
+	display(array,size(array));
+	printf("---\n");
+	printf("19:%d",lookup(array,19));
 }
