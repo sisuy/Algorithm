@@ -13,7 +13,17 @@ int main(){
 	printf("19:%d\n",lookup(array,19));
 	printf("---\n");
 
-	int A[] = {0,0,0,0,0,1};
-	int B[] = {1,1,1,1,0,1};
+	int A[] = {1,1,1,1,1,1};
+	int B[] = {1,0,1,1,0,0};
 	binaryDisplay(binaryAdd(A,B));
+	printf("\n---\n");
+	int C[] = {1,3,5,6,7,9,2,4,6,6,10,11};
+	display(C,12);
+	printf("---\n");
+	display(merge(C,0,5,11),12);
+	
+	printf("---\n");
+	int E[] = {-1,2,-4,3,1,0,-1,4,-3,5};
+	display(FindMaxCrossingSubarray(E,0,4,9),3);
+
 }
