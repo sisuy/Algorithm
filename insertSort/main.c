@@ -25,5 +25,7 @@ int main(){
 	printf("---\n");
 	int E[] = {-1,2,-4,3,1,0,-1,4,-3,5};
 	display(FindMaxCrossingSubarray(E,0,4,9),3);
-
+	printf("---\n");
+	int F[10] ={1,-2,3,-1,1,-9,7,3,-9,1};
+	display(FindMaxSubarray(F,0,9),3);
 }

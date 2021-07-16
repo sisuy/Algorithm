@@ -155,6 +155,25 @@ int* FindMaxCrossingSubarray(int* A,int low,int mid,int high){
 }
 
 
-int* FindMaxSubarray(int* A;int low,int high){
+int* FindMaxSubarray(int* A,int low,int high){
+	if(low == high){
+		int* ret = malloc(sizeof(int) * 3);
+		ret[0] = low;
+		ret[1] = high;
+		ret[2] = A[high];
+		return ret;
+	}
+	int mid = (low + high)/2;
 	
+	int* left_array = FindMaxSubarray(A,low,mid);
+	int* right_array = FindMaxSubarray(A,mid + 1,high);
+	int* mid_array = FindMaxCrossingSubarray(A,low,mid,high); 
+	
+	if(left_array[2] >= right_array[2] && left_array[2] >= mid_array[2]){
+		return left_array;
+	}else if(right_array[2] >= left_array[2] && right_array[2] >= mid_array[2]){
+		return right_array;
+	}else{
+		return mid_array;
+	}	
 }
