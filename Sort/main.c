@@ -1,6 +1,8 @@
 #include"insertSort.c"
 #include"BubbleSort.c"
 #include"test.c"
+#include"mergeSort.c"
+
 int main(){
 	int array[]= {19,2,3,4,1,2,5,6,4};
 	printf("size:%d",size(array));	
@@ -33,4 +35,10 @@ int main(){
 	printf("---\n");
 	int F[10] ={1,-2,3,-1,1,-9,7,3,-9,1};
 	display(FindMaxSubarray(F,0,9),3);
+	
+	printf("merge:\n");
+	int G[10] = {1,-2,3,-1,1,-9,7,3,-9,1};
+	mergeSort(G,0,5,10);
+	display(G,10);
 }
+
