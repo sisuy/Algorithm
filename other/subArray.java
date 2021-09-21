@@ -50,7 +50,8 @@ public class SubArray{
             }
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]
+    ){
         int[] test = {1,-1,4};
         int[] ret = getMax(test,0,test.length - 1);
         System.out.println(ret[0]);
