@@ -1,5 +1,5 @@
 # Maximum subarray(divide and conquer):    
-![1](C:\Users\18080\Desktop\MergeSort\Algorithm\other\1.png)
+![1](Algorithm\other\1.png)
 
 ## divide the problem into three part(left, mid , right)
 ## Mid:
@@ -18,7 +18,7 @@
 		
 		Int p = mid;
 		
-		//calculate the maximum on the left£¨mid to head£©
+		//calculate the maximum on the leftÂ£Â¨mid to headÂ£Â©
 		While(mid >= head){
 			Value = value + arr[p];
 			If(value >= max){
