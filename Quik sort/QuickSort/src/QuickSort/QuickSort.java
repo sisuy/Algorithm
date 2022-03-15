@@ -8,9 +8,16 @@ public class QuickSort {
         System.out.println("size:" + array.length);
     }
 
+    /**
+     * Assign the project to an employee.
+     * @param p - the head pivot
+     * @param r - the end pivot
+     *
+     */
     public static void quickSort(int[] array,int p,int r){
         if(p < r){
-            int q = partition(array,p,r);
+            //partitian
+            int q = randomPartition(array,p,r);
             quickSort(array,p,q - 1);
             quickSort(array,q,r);
         }
@@ -33,5 +40,19 @@ public class QuickSort {
             array[r] = array[i + 1];
             array[i + 1] = tmp;
             return i + 1;
+    }
+
+    public static int randomPartition(int[] array,int p,int r){
+        int rdm = (int)(Math.random()*(r-p+1)+p);
+
+        //handle the random value ,exchange the value in the array
+        int tmp = array[rdm];
+        array[rdm] = array[r];
+        array[r] = tmp;
+
+        //partitian
+        int ret = QuickSort.partition(array,p,r);
+
+        return  ret;//return the pivot
     }
 }
